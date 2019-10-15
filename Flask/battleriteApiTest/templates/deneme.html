@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ player.name }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body style="background-color: rgb(9, 16, 33); background-size: contain; background-position: top; background-repeat: no-repeat; color:rgb(139, 159, 181);" background="/static/img/profilepg.jpg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+              <a class="navbar-brand" href="{{ url_for('index') }}"><h4>Battlerite Stats</h4></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Leader Boards
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('streams') }}">Streams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+              </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container-fluid" style="margin-top:30px; margin-bottom:30px;">
+        <div class="row" style="padding-bottom: 10px;padding-top: 10px;padding-left: 150px;padding-right: 150px;background:rgba(30,44,64,0.75);">
+            <div class="col-md-6 align-text-top">
+                <div class="row">
+                    <img class="rounded" src="/static/img/avatar/{{ player.pic }}" width="100" height="100" alt="Profile Avatar">
+                    <h6 class="caption bg-dark" style="padding: 5px">{{ player.accLvl }}</h6>
+                    <div class="col-5">
+                        <h4>{{ player.name }}</h4>
+                        <h6 class="text-muted">{{ player.title }}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" style="height: inherit">
+                <div class="text-center vertical-center">
+                    <div class="row">
+                        <div class="col-3"><h6>{{ player.totchamplv }} </h6> <h6 class="text-muted">Tot.Champ.Lv.</h6></div>
+                        <div class="col-3"><h6>3,259</h6> <h6 class="text-muted">MMR</h6></div>
+                        <div class="col-3"><span class="h6 text-success">{{ player.wins }}</span> - <span class="h6 text-danger">{{ player.losses }}</span> <h6 class="text-muted">Win-Loss</h6></div>
+                        <div class="col-3"> <h6> {{ player.txtwinrate }}%</h6><h6 class="text-muted">Win Rate</h6></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container-fluid pl-6 pr-6">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" style="padding-left: 30px;" role="tablist">
+                    <a class="nav-item nav-link active"  id="nav-overview-tab" data-toggle="tab" href="#nav-overview" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Champions</a>
+                </div>
+            </nav>
+
+            <div class="tab-content container-fluid" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
+                    <div class="row" style="margin-top: 5px">
+                        <div class="col-md-4">
+                            <h6 class="text-muted">Solo</h6>
+                            <div class="row">
+                                <a href="#"> <img src="/static/img/league/{{ team[0][0].league }}.png" width="80" height="80"></a>
+                                <span style="margin-left: 5px">
+                                    <h5>{{ team[0][1] }}</h5>
+                                    <h6 class="text-muted">Division {{ team[0][0].division }}</h6>
+                                </span>
+                            </div>
+                            <h6 class="text-muted">2v2 Teams</h6>
+                            <div class="row" style="margin-bottom:10px;border:1px solid rgb(53, 78, 108);background:rgb(30, 44, 64);">
+                                <img src="/static/img/avatar/{{ team[1][1] }}.png" width="80" height="80">
+                                <span style="margin-left: 5px">
+                                    {% if team[1][0].name == "" %}
+                                        <h5>{{ team[1][3][0][1] }} & {{ team[1][3][1][1] }}</h5>
+                                    {% else %}
+                                        <h5>{{ team[1][0].name | truncate(15) }}</h5>
+                                    {% endif %}
+                                    <img src="/static/img/league/{{ team[1][0].league }}.png" width="45" height="45">
+                                    <span class="text-muted">
+                                        {{ team[1][2] }} Division {{ team[1][0].division}}
+                                    </span>
+                                </span>
+                                <div class="container text-muted text-center">
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-auto">
+                                            <h6>{{ team[1][0].division_rating }}</h6>
+                                            <h6>Rating</h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>
+                                                <a href="{{ url_for('view_profile', player_name=team[1][3][0][1]) }}"><img src="/static/img/avatar/{{ team[1][3][0][2] }}.png" width="30" height="30"></a>
+{#                                                   <h6>{{ team[1][3][0][1] }}</h6>#}
+                                            </span>
+                                            <span>
+                                                <a href="{{ url_for('view_profile', player_name=team[1][3][1][1]) }}"><img src="/static/img/avatar/{{ team[1][3][1][2] }}.png" width="30" height="30"></a>
+{#                                                   <h6>{{ team[1][3][1][1] }}</h6>#}
+                                            </span>
+                                            <h6>Members</h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="text-info">{{ team[1][0].wins }}</span>-
+                                            <span class="text-danger">{{ team[1][0].losses }}</span>
+                                            <h6>Win/Loss</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6 class="text-muted">3v3 Teams</h6>
+                            <div class="row" style="border:1px solid rgb(53, 78, 108);background:rgb(30, 44, 64); margin-bottom: 10px">
+                                <img src="/static/img/avatar/{{ team[2][1] }}.png" width="80" height="80">
+                                <span style="margin-left: 5px">
+                                    {% if team[2][0].name == "" %}
+                                        <h5>{{ team[2][3][0][1] }} & {{ team[2][3][1][1] }} & {{ team[2][3][2][1] }}</h5>
+                                    {% else %}
+                                        <h5>{{ team[2][0].name |truncate(3) }}</h5>
+                                    {% endif %}
+                                    <img src="/static/img/league/{{ team[2][0].league }}.png" width="40" height="40">
+                                    <span class="text-muted">
+                                        {{ team[2][2] }} Division {{ team[2][0].division}}
+                                    </span>
+                                </span>
+                                <div class="container text-muted text-center">
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-auto">
+                                            <h6>{{ team[2][0].division_rating }}</h6>
+                                            <h6>Rating</h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span>
+                                                <a href="{{ url_for('view_profile', player_name=team[2][3][0][1]) }}"><img src="/static/img/avatar/{{ team[2][3][0][2] }}.png" width="30" height="30"></a>
+{#                                                   <h6>{{ team[1][3][0][1] }}</h6>#}
+                                            </span>
+                                            <span>
+                                                <a href="{{ url_for('view_profile', player_name=team[2][3][1][1]) }}"><img src="/static/img/avatar/{{ team[2][3][1][2] }}.png" width="30" height="30"></a>
+{#                                                   <h6>{{ team[1][3][1][1] }}</h6>#}
+                                            </span>
+                                            <span>
+                                                <a href="{{ url_for('view_profile', player_name=team[2][3][2][1]) }}"><img src="/static/img/avatar/{{ team[2][3][2][2] }}.png" width="30" height="30"></a>
+{#                                                   <h6>{{ team[1][3][1][1] }}</h6>#}
+                                            </span>
+                                            <h6>Members</h6>
+                                        </div>
+                                        <div class="col-auto">
+                                            <span class="text-info">{{ team[2][0].wins }}</span>-
+                                            <span class="text-danger">{{ team[2][0].losses }}</span>
+                                            <h6>Win/Loss</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="text-muted">Queue Stats</h6>
+                            <div class="row" style="border:1px solid rgb(53, 78, 108);background:rgb(30, 44, 64); margin-bottom: 10px; padding-bottom: 10px; padding-top: 10px">
+                                <div class="col-md-12 text-center">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5>League</h5>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="row text-muted">
+                                        <div class="col-md-6 tex">2v2</div>
+                                        <div class="col-md-6">
+                                            <span class="text-info">{{ player.Ranked2v2Wins }}</span>-<span class="text-danger">{{ player.Ranked2v2Losses }}</span> ({{ player.txtrank2v2winrate }}%)
+                                        </div>
+                                    </div>
+                                    <div class="row text-muted">
+                                        <div class="col-md-6">3v3</div>
+                                        <div class="col-md-6">
+                                            <span class="text-info">{{ player.Ranked3v3Wins }}</span>-<span class="text-danger">{{ player.Ranked3v3Losses }}</span> ({{ player.txtrank3v3winrate }}%)
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h5>Quick</h5>
+                                        </div><hr>
+                                    </div>
+                                    <div class="row text-muted">
+                                        <div class="col-md-6">2v2</div>
+                                        <div class="col-md-6">
+                                            <span class="text-info">{{ player.Unranked2v2Wins }}</span>-<span class="text-danger">{{ player.Unranked2v2Losses }}</span> ({{ player.txtunrank2v2winrate }}%)</div>
+                                    </div>
+                                    <div class="row text-muted">
+                                        <div class="col-md-6">3v3</div>
+                                        <div class="col-md-6">
+                                            <span class="text-info">{{ player.Unranked3v3Wins }}</span>-<span class="text-danger">{{ player.Unranked3v3Losses }}</span> ({{ player.txtunrank3v3winrate }}%)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h6 class="text-muted">Pick Rates</h6>
+                            <div class="row" style="border:1px solid rgb(53, 78, 108);background:rgb(30, 44, 64); margin-bottom: 10px; padding-bottom: 10px; padding-top: 10px">
+                                {% for actor in actors %}
+                                    <div class="col-md-12" style="margin-bottom: 10px">
+                                        <div class="row text-center">
+                                            <div class="col-md-4 img-circle">
+                                                <img src="/static/img/champ/champ_{{ actor[2] }}.png" class="rounded-circle" width="70" height="70">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="text-info">{{ actor[3] }}</span>-<span class="text-danger">{{ actor[0] - actor[3] }}</span><span class="text-muted"> ({{ actor[4] }}%)</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span>{{ actor[0] }}</span><span class="text-muted"> ({{ actor[1] }}%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <h6 class="text-muted">Favorite Champions</h6>
+                            <div class="container">
+                                <div class="row">
+                                    {% for champ in champ_sorted %}<div class="col">
+                                    <div class="thumbnail" style="border:1px solid rgb(53, 78, 108);">
+                                        <img src="/static/img/champ/champ_{{ champ.name }}.png" width="198" height="100" alt="">
+                                        <div class="caption lv">
+                                            <h4>{{ champ.lv }}</h4>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="col-md-7"><span class="h6 text-muted">WIN RATE</span></div>
+                                                <div class="col-md-5"> <span class="h6"> {{ champ.txtwinrate }}%</span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-7"> <span class="h6 text-muted">MATCHES</span> </div>
+                                                <div class="col-md-5"><span class="h6">{{ champ.totWin + champ.totLoss }}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="row">There is no Data To Show.</div>{% endfor %}</div>
+                            </div>
+
+                            <h6 class="text-muted">Match History</h6>
+                            {% for match in match_history %}
+                                <div class="row text-center text-white" style="background-color:{% if match[1].won == True %}#39568F{% else %}#B71C1C{% endif %}; margin:10px;">
+                                    <div class="col-md-2 col-xs-1" style="padding-top: 40px">
+                                        <h6>{{ match[3] }}</h6>
+                                    </div>
+                                    <div class="col-md-2" style="padding-top: 20px;">
+                                        <img src="/static/img/champ/champ_{{ match[6] }}.png" width="100" height="60" >
+                                    </div>
+                                    <div class="col-md-3" style="padding-top: 25px">
+                                        <div>
+                                            <h6>{{ match[0].damage_done }}/{{ match[0].healing_done }}/{{ match[0].disables_done }} </h6>
+                                            <h6>D/H/D</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding-top: 5px">
+                                        <svg width="45%" height="60" viewBox="0 0 42 42" class="donut" >
+                                            <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="transparent"></circle>
+                                            <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#d2d3d4" stroke-width="3"></circle>
+
+                                            <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#42A5F5" stroke-width="5" stroke-dasharray="{{ match[7] }} {{ 100 - match[7] }}" stroke-dashoffset="25"></circle>
+
+                                            <text y="65%" x="30%" class="chart-number" style="fill: #fff">
+                                                {{ match[7] }}
+                                            </text>
+                                        </svg>
+                                        <h6>Contribution</h6>
+
+                                    </div>
+                                    <div class="col-md-2" style="padding-top: 20px">
+                                        <p style="font-size: small">{{ match[5] }}</p>
+                                        <p>{{ match[4] }}</p>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row">Not Enoght Data To Display</div>
+                            {% endfor %}
+
+                        </div>
+
+
+{#                       {% else %}#}
+{#                           <div class="row text-center" style="border:1px solid rgb(53, 78, 108);background:rgb(30, 44, 64); margin-bottom: 10px">#}
+{#                               <span class="h5">Not Enough Data To Display</span>#}
+{#                           </div>#}
+{#                       {% endfor %}#}
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="container" style="padding-top: 10px">
+                        <div class="row">
+                            {% for champ in champ_sorted2 %}
+                                <div class="col-xs-12 col-sm-6 col-md-3">
+                                    <div class="thumbnail" style="border:1px solid rgb(53, 78, 108);">
+                                        <img src="/static/img/champ/champ_{{ champ.name }}.png" width="198" height="100" alt="">
+                                        <div class="caption lv">
+                                            <h4>{{ champ.lv }}</h4>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="row">
+                                                <div class="col-md-7"><span class="h6 text-muted">WIN RATE</span></div>
+                                                <div class="col-md-5"><span class="h6"> {{ champ.txtwinrate }}%</span></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-7"> <span class="h6 text-muted">MATCHES</span> </div>
+                                                <div class="col-md-5"><span class="h6">{{ champ.totWin + champ.totLoss }}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="row">There is no Data To Show.</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.2.1/dt-1.10.16/b-1.5.1/datatables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/script/datatables.min.js"></script>
+
+</body>
+<footer>
+</footer>
+</html>

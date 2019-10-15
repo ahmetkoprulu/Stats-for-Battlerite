@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>BattleStats</title>
+  </head>
+  <body style="background-color: rgb(9, 16, 33); background-size: contain; background-position: top; background-repeat: no-repeat; color:rgb(139, 159, 181);" background="/static/img/indexbanner.jpg">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+      <div class="container">
+          <a class="navbar-brand" href="{{ url_for('index') }}"><h4>Battlerite Stats</h4></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto text-light">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Leader Boards
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('streams') }}">Streams</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+          <div class="container-fluid" style="padding-top: 240px;padding-bottom: 150px">
+              <div class="row">
+                  <div class="container">
+                      <div class="text-center">
+                          <img src="#" width="30%" height="100" class="bg-transparent">
+                      </div>
+                      <form class="form-inline justify-content-center align-items-center my-2 my-lg-0" method="post">
+                          <input class="form-control mr-sm-2" type="text" name="username" id="username" placeholder="Search For Nickname.." style="width: 50%">
+                          <button class="btn btn-outline-info my-2 my-sm" type="submit">Search</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
+
+      <div class="container">
+          <h1 class="text-center">What Is Battlerite Stats ?</h1>
+          <hr>
+          <div class="row">
+              <div class="col-md-4 bg-danger" style="height: 300px;margin-bottom: 20px">
+              </div>
+              <div class="col-md-4 bg-info" style="height: 300px;margin-bottom: 20px">
+
+              </div>
+              <div class="col-md-4 bg-dark" style="height: 300px;margin-bottom: 20px">
+
+              </div>
+          </div>
+      </div>
+  </body>
+  <footer class="card-footer text-center bg-dark">
+      <h4 class="text-muted">Copyright Ananı Siker</h4>
+  </footer>
+</html>

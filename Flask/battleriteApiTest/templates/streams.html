@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Live Streams</title>
+</head>
+<body style="background-color: rgb(9, 16, 33); background-size: contain; background-position: top; background-repeat: no-repeat; color:rgb(139, 159, 181);" background="/static/img/profilepg.jpg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container">
+              <a class="navbar-brand" href="{{ url_for('index') }}"><h4>Battlerite Stats</h4></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Leader Boards
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('streams') }}">Streams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+              </ul>
+          </div>
+        </div>
+    </nav>
+    <div class="container-fluid" style="margin-top:30px; margin-bottom:30px;">
+        <div class="row" style="padding-bottom: 10px;padding-top: 10px;padding-left: 150px;padding-right: 150px;background:rgba(30, 44, 64,0.75);">
+            <div class="col-md-12 align-text-bottom text-center">
+                <h1>Live Streams</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="row">
+                    {% for stream in profiles %}
+                        <div class="col-md-4" >
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{{ stream.url }}">
+                                        <img class="img-fluid"  src="{{ stream.preview_md }}" alt="Card image cap">
+                                        <p class="caption bg-dark" style="margin-left: 15px; padding: 5px"><span class="glyphicon glyphicon-user"></span>{{ stream.viewer }}-{{ stream.lang | upper}}</p>
+                                    </a>
+                                    <div>
+                                        <p>
+                                            <img src="{{ stream.logo }}" width="40" height="40" style="float: left; margin-top: 5px; margin-right: 5px">
+                                            <strong>{{ stream.name }}</strong> <br> {{ stream.status | truncate(25) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
